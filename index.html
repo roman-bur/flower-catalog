@@ -181,18 +181,16 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
 /* Upsell */
 .pcard-upsell { padding: 0 24px 28px; border-top: 1px solid #2a3c2a; margin-top: 4px; }
 .pcard-upsell-title { font-size: 13px; font-weight: 700; color: #e8f0e4; text-transform: uppercase; letter-spacing: 1.5px; padding: 20px 0 14px; }
-.pcard-upsell-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
-.pcard-upsell-card { background: #253525; border: 1px solid #3E5647; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-.pcard-upsell-img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #1e2e1e; }
-.pcard-upsell-body { padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
-.pcard-upsell-name { font-size: 12px; font-weight: 600; color: #e8f0e4; line-height: 1.3; }
-.pcard-upsell-price { font-size: 13px; font-weight: 700; color: #fff; }
-.pcard-upsell-btn {
-  margin-top: 6px; padding: 7px; background: transparent; border: 1px solid #7E9C82;
-  border-radius: 8px; color: #8fb88a; font: inherit; font-size: 12px; font-weight: 600;
-  cursor: pointer; transition: all .2s; text-align: center;
+.pcard-upsell-cats { display: flex; gap: 10px; flex-wrap: wrap; }
+.pcard-upsell-cat {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  background: #253525; border: 1px solid #3E5647; border-radius: 14px;
+  padding: 16px 20px; cursor: pointer; transition: all .2s; text-decoration: none; min-width: 110px;
 }
-.pcard-upsell-btn:hover { background: #7E9C82; color: #F3F7F1; }
+.pcard-upsell-cat:hover { border-color: #7E9C82; background: #2e4a33; transform: translateY(-3px); }
+.pcard-upsell-cat-icon { font-size: 32px; line-height: 1; }
+.pcard-upsell-cat-name { font-size: 13px; font-weight: 600; color: #e8f0e4; text-align: center; }
+.pcard-upsell-cat-hint { font-size: 11px; color: #7a9278; text-align: center; }
 
 /* ========== CART ========== */
 .cart-fab {
@@ -541,8 +539,24 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
     </div>
     <!-- Upsell -->
     <div class="pcard-upsell">
-      <div class="pcard-upsell-title">Вам также будет интересно</div>
-      <div class="pcard-upsell-grid" id="pcard-upsell-grid"></div>
+      <div class="pcard-upsell-title">Дополнить заказ</div>
+      <div class="pcard-upsell-cats">
+        <div class="pcard-upsell-cat" onclick="goToCategory('Воздушные шары')">
+          <span class="pcard-upsell-cat-icon">🎈</span>
+          <span class="pcard-upsell-cat-name">Воздушные шары</span>
+          <span class="pcard-upsell-cat-hint">Добавить к букету</span>
+        </div>
+        <div class="pcard-upsell-cat" onclick="goToCategory('Вазы и секаторы')">
+          <span class="pcard-upsell-cat-icon">🏺</span>
+          <span class="pcard-upsell-cat-name">Вазы и секаторы</span>
+          <span class="pcard-upsell-cat-hint">Для букета</span>
+        </div>
+        <div class="pcard-upsell-cat" onclick="goToCategory('Игрушки')">
+          <span class="pcard-upsell-cat-icon">🧸</span>
+          <span class="pcard-upsell-cat-name">Игрушки</span>
+          <span class="pcard-upsell-cat-hint">Милый подарок</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -911,14 +925,6 @@ document.getElementById('o-submit').onclick = async function() {
 };
 
 // ===== PRODUCT CARD =====
-var UPSELL_ITEMS = [
-  { name: 'Воздушные шары (3 шт)', price: 590, image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=300', desc: 'Гелиевые фольгированные шары' },
-  { name: 'Мягкая игрушка Зайка', price: 890, image: 'https://images.unsplash.com/photo-1559715541-5daf8a0296d0?w=300', desc: 'Плюшевая игрушка в подарок' },
-  { name: 'Конфеты Raffaello', price: 450, image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=300', desc: 'Коробка конфет 150г' },
-  { name: 'Ваза стеклянная', price: 790, image: 'https://images.unsplash.com/photo-1612196808214-b7e9b9f33a62?w=300', desc: 'Элегантная ваза для букета' },
-  { name: 'Открытка с пожеланием', price: 150, image: 'https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=300', desc: 'Красивая открытка с вашим текстом' },
-];
-
 var pcardItem = null;
 var pcardImgs = [];
 var pcardIdx  = 0;
@@ -941,7 +947,6 @@ function openProductCard(item) {
   }).join('');
 
   renderPcardGallery();
-  renderUpsell();
   document.getElementById('pcard-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -967,24 +972,16 @@ function renderPcardGallery() {
   }
 }
 
-function renderUpsell() {
-  var grid = document.getElementById('pcard-upsell-grid');
-  grid.innerHTML = UPSELL_ITEMS.map(function(u){
-    return '<div class="pcard-upsell-card">'
-      +'<img class="pcard-upsell-img" src="'+u.image+'" alt="'+u.name+'" loading="lazy">'
-      +'<div class="pcard-upsell-body">'
-      +'<div class="pcard-upsell-name">'+u.name+'</div>'
-      +'<div class="pcard-upsell-price">'+Number(u.price).toLocaleString('ru-RU')+' ₽</div>'
-      +'<button class="pcard-upsell-btn" onclick="addToCart(\''+u.name.replace(/'/g,"\\'")
-        +'\',\''+u.desc.replace(/'/g,"\\'")+'\',\''+u.price+'\',\''+u.image+'\');showUpsellAdded(this)">Добавить в заказ</button>'
-      +'</div></div>';
-  }).join('');
-}
-
-function showUpsellAdded(btn) {
-  btn.textContent = '✓ Добавлено';
-  btn.style.background = '#7E9C82'; btn.style.color = '#F3F7F1';
-  setTimeout(function(){ btn.textContent = 'Добавить в заказ'; btn.style.background = ''; btn.style.color = ''; }, 1500);
+function goToCategory(catName) {
+  closePcard();
+  // переключаем вкладку каталога на нужную категорию
+  var tabs = document.querySelectorAll('.fcat-tab');
+  tabs.forEach(function(t){
+    if(t.getAttribute('data-tab') === catName) t.click();
+  });
+  // прокручиваем к каталогу
+  var catalog = document.getElementById('catalog');
+  if(catalog) catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function closePcard() {
