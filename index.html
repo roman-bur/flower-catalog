@@ -107,6 +107,82 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
 .fcat-btn { display: block; text-align: center; text-decoration: none; margin-top: 10px; background: #7E9C82; color: #F3F7F1; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 600; transition: background .15s; }
 .fcat-btn:hover { background: #6E8B73; }
 
+/* ========== CART ========== */
+.cart-fab {
+  position: fixed; bottom: 28px; right: 28px; z-index: 900;
+  width: 62px; height: 62px; border-radius: 50%;
+  background: #7E9C82; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,.35);
+  transition: transform .2s, background .2s;
+}
+.cart-fab:hover { background: #6E8B73; transform: scale(1.07); }
+.cart-fab svg { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cart-fab-badge {
+  position: absolute; top: -4px; right: -4px;
+  background: #e24b4a; color: #fff; font-size: 11px; font-weight: 700;
+  width: 22px; height: 22px; border-radius: 50%;
+  display: none; align-items: center; justify-content: center;
+  border: 2px solid #1e2e1e;
+}
+.cart-fab-badge.show { display: flex; }
+
+.cart-overlay {
+  display: none; position: fixed; inset: 0; z-index: 1001;
+  background: rgba(10,20,10,.75); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: flex-end;
+  padding: 16px;
+}
+.cart-overlay.open { display: flex; }
+.cart-box {
+  background: #1e2e1e; border: 1px solid #3e523e; border-radius: 20px;
+  width: 100%; max-width: 460px; max-height: 85vh;
+  display: flex; flex-direction: column;
+}
+.cart-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px 16px; border-bottom: 1px solid #2a3c2a; flex-shrink: 0;
+}
+.cart-head-title { font-size: 18px; font-weight: 700; color: #e8f0e4; }
+.cart-head-close {
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid #3e523e;
+  background: transparent; color: #9fb89c; font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.cart-head-close:hover { border-color: #a3c4a0; color: #e8f0e4; }
+.cart-items { overflow-y: auto; flex: 1; padding: 16px 24px; display: flex; flex-direction: column; gap: 12px; }
+.cart-empty { text-align: center; color: #5a7a5a; padding: 40px 0; font-size: 15px; }
+.cart-row {
+  display: flex; gap: 12px; align-items: center;
+  background: #253525; border-radius: 12px; padding: 10px 12px;
+}
+.cart-row-img { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+.cart-row-info { flex: 1; min-width: 0; }
+.cart-row-name { font-size: 14px; font-weight: 600; color: #e8f0e4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cart-row-price { font-size: 13px; color: #8fb88a; margin-top: 2px; }
+.cart-row-qty { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.cart-qty-btn {
+  width: 28px; height: 28px; border-radius: 8px; border: 1px solid #3e523e;
+  background: transparent; color: #9fb89c; font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.cart-qty-btn:hover { border-color: #7E9C82; color: #e8f0e4; }
+.cart-qty-num { font-size: 14px; font-weight: 600; color: #e8f0e4; min-width: 20px; text-align: center; }
+.cart-row-del { width: 28px; height: 28px; border-radius: 8px; border: none; background: transparent; color: #5a7a5a; font-size: 14px; cursor: pointer; transition: color .2s; flex-shrink: 0; }
+.cart-row-del:hover { color: #e24b4a; }
+.cart-foot {
+  padding: 16px 24px 20px; border-top: 1px solid #2a3c2a; flex-shrink: 0;
+}
+.cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.cart-total-label { font-size: 14px; color: #9fb89c; }
+.cart-total-sum { font-size: 22px; font-weight: 700; color: #e8f0e4; }
+.cart-checkout-btn {
+  width: 100%; padding: 14px; background: #7E9C82; border: none; border-radius: 12px;
+  color: #F3F7F1; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .2s;
+}
+.cart-checkout-btn:hover { background: #6E8B73; }
+.cart-checkout-btn:disabled { opacity: .5; cursor: not-allowed; }
+
 /* ========== POPUP ========== */
 .popup-overlay {
   display: none; position: fixed; inset: 0; z-index: 1000;
@@ -340,19 +416,39 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
   </div>
 </section>
 
-<!-- ========== POPUP ========== -->
+<!-- ========== CART FAB ========== -->
+<button class="cart-fab" id="cart-fab" aria-label="Корзина">
+  <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+  <span class="cart-fab-badge" id="cart-badge">0</span>
+</button>
+
+<!-- ========== CART POPUP ========== -->
+<div class="cart-overlay" id="cart-overlay">
+  <div class="cart-box">
+    <div class="cart-head">
+      <span class="cart-head-title">Корзина</span>
+      <button class="cart-head-close" id="cart-close">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty">Корзина пуста</div>
+    </div>
+    <div class="cart-foot" id="cart-foot" style="display:none">
+      <div class="cart-total">
+        <span class="cart-total-label">Итого</span>
+        <span class="cart-total-sum" id="cart-total">0 ₽</span>
+      </div>
+      <button class="cart-checkout-btn" id="cart-checkout">Оформить заказ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ORDER POPUP ========== -->
 <div class="popup-overlay" id="order-popup">
   <div class="popup-box">
     <button class="popup-close" id="popup-close">✕</button>
     <div id="popup-form-wrap">
-      <div class="popup-item-info" id="popup-item-info">
-        <img class="popup-item-img" id="popup-item-img" src="" alt="">
-        <div>
-          <div class="popup-item-name" id="popup-item-name"></div>
-          <div class="popup-item-price" id="popup-item-price"></div>
-        </div>
-      </div>
       <div class="popup-title">Оформить заказ</div>
+      <div id="popup-cart-summary" style="background:#253525;border-radius:12px;padding:12px;margin-bottom:20px;max-height:160px;overflow-y:auto;"></div>
 
       <div class="popup-field">
         <label class="popup-label">Имя *</label>
@@ -362,7 +458,6 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
         <label class="popup-label">Телефон *</label>
         <input class="popup-input" id="o-phone" type="tel" placeholder="+7 (___) ___-__-__">
       </div>
-
       <div class="popup-field">
         <label class="popup-label">Способ получения *</label>
         <select class="popup-select" id="o-delivery">
@@ -371,7 +466,6 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
           <option value="pickup">Самовывоз</option>
         </select>
       </div>
-
       <div class="popup-delivery-block" id="block-delivery">
         <div class="popup-field">
           <label class="popup-label">Адрес доставки *</label>
@@ -382,23 +476,19 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
           <input class="popup-input" id="o-datetime-delivery" type="text" placeholder="Например: 8 июля, к 15:00">
         </div>
       </div>
-
       <div class="popup-delivery-block" id="block-pickup">
         <div class="popup-field">
           <label class="popup-label">Ко скольки приготовить букет *</label>
           <input class="popup-input" id="o-datetime-pickup" type="text" placeholder="Например: 8 июля, к 12:00">
         </div>
       </div>
-
       <div class="popup-field">
         <label class="popup-label">Комментарий к заказу</label>
-        <textarea class="popup-textarea" id="o-comment" placeholder="Пожелания по оформлению, дополнительная информация..."></textarea>
+        <textarea class="popup-textarea" id="o-comment" placeholder="Пожелания по оформлению..."></textarea>
       </div>
-
       <button class="popup-submit" id="o-submit">Отправить заказ</button>
       <div class="popup-error" id="o-error"></div>
     </div>
-
     <div class="popup-success" id="popup-success" style="display:none">
       <div class="popup-success-icon">🌸</div>
       <div class="popup-success-title">Заказ принят!</div>
@@ -500,200 +590,238 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
 
 <!-- ========== SCRIPTS ========== -->
 <script>
-// Slider
+// ===== SLIDER =====
 (function() {
-  var track = document.querySelector('.rc-gallery__track');
-  if (!track) return;
+  var track = document.querySelector('.rc-gallery__track'); if (!track) return;
   var slides = track.querySelectorAll('.rc-gallery__slide');
   var dots = document.querySelectorAll('.rc-gallery__dot');
-  var total = slides.length;
-  var current = 0;
-  var timer = null;
+  var total = slides.length, current = 0, timer = null;
   function goTo(idx) {
-    slides[current].classList.remove('rc-gallery__slide--active');
-    dots[current].classList.remove('rc-gallery__dot--active');
+    slides[current].classList.remove('rc-gallery__slide--active'); dots[current].classList.remove('rc-gallery__dot--active');
     current = (idx + total) % total;
-    slides[current].classList.add('rc-gallery__slide--active');
-    dots[current].classList.add('rc-gallery__dot--active');
+    slides[current].classList.add('rc-gallery__slide--active'); dots[current].classList.add('rc-gallery__dot--active');
   }
-  function next() { goTo(current + 1); }
-  function prev() { goTo(current - 1); }
+  function next() { goTo(current + 1); } function prev() { goTo(current - 1); }
   function startAuto() { stopAuto(); timer = setInterval(next, 5000); }
   function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
   document.querySelector('.rc-gallery__arrow--prev').addEventListener('click', function() { prev(); startAuto(); });
   document.querySelector('.rc-gallery__arrow--next').addEventListener('click', function() { next(); startAuto(); });
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function() { goTo(parseInt(dot.getAttribute('data-slide'), 10)); startAuto(); });
-  });
+  dots.forEach(function(dot) { dot.addEventListener('click', function() { goTo(parseInt(dot.getAttribute('data-slide'), 10)); startAuto(); }); });
   var gallery = document.querySelector('.rc-gallery');
-  gallery.addEventListener('mouseenter', stopAuto);
-  gallery.addEventListener('mouseleave', startAuto);
+  gallery.addEventListener('mouseenter', stopAuto); gallery.addEventListener('mouseleave', startAuto);
   var touchX = 0;
   gallery.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; stopAuto(); }, { passive: true });
-  gallery.addEventListener('touchend', function(e) {
-    var diff = touchX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
-    startAuto();
-  }, { passive: true });
+  gallery.addEventListener('touchend', function(e) { var diff = touchX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); } startAuto(); }, { passive: true });
   startAuto();
 })();
 
-// Popup order
+// ===== CART =====
 var TG_TOKEN = '8704621204:AAFSUK4xtZgcEEQ3aXEMjUbs7daFvB4oSMc';
 var TG_CHAT  = '-5463239294';
-var currentItem = {};
+var cart = []; // [{id, name, desc, price, image, qty}]
 
-function openOrder(name, desc, price, image) {
-  currentItem = { name: name, desc: desc, price: price, image: image };
-  document.getElementById('popup-item-name').textContent = name;
-  document.getElementById('popup-item-price').textContent = Number(price).toLocaleString('ru-RU') + ' ₽';
-  document.getElementById('popup-item-img').src = image;
-  document.getElementById('o-name').value = '';
-  document.getElementById('o-phone').value = '';
-  document.getElementById('o-delivery').value = '';
-  document.getElementById('o-address').value = '';
-  document.getElementById('o-datetime-delivery').value = '';
-  document.getElementById('o-datetime-pickup').value = '';
-  document.getElementById('o-comment').value = '';
-  document.getElementById('o-error').className = 'popup-error';
-  document.getElementById('popup-form-wrap').style.display = '';
-  document.getElementById('popup-success').style.display = 'none';
-  document.getElementById('block-delivery').className = 'popup-delivery-block';
-  document.getElementById('block-pickup').className = 'popup-delivery-block';
+function cartTotal() { return cart.reduce(function(s,i){ return s + i.price * i.qty; }, 0); }
+function cartCount() { return cart.reduce(function(s,i){ return s + i.qty; }, 0); }
+
+function updateBadge() {
+  var n = cartCount();
+  var badge = document.getElementById('cart-badge');
+  badge.textContent = n;
+  badge.className = 'cart-fab-badge' + (n > 0 ? ' show' : '');
+}
+
+function addToCart(name, desc, price, image) {
+  var id = name + '|' + price;
+  var existing = cart.find(function(i){ return i.id === id; });
+  if (existing) { existing.qty++; }
+  else { cart.push({ id: id, name: name, desc: desc, price: Number(price), image: image, qty: 1 }); }
+  updateBadge();
+  showAddedToast(name);
+}
+
+function showAddedToast(name) {
+  var t = document.getElementById('added-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'added-toast';
+    t.style.cssText = 'position:fixed;bottom:104px;right:28px;background:#2C3E31;border:1px solid #3e523e;color:#e8f0e4;padding:10px 16px;border-radius:12px;font-size:13px;z-index:899;transition:opacity .3s;max-width:220px;text-align:center;';
+    document.body.appendChild(t);
+  }
+  t.textContent = '✓ Добавлено в корзину';
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.style.opacity = '0'; }, 1800);
+}
+
+function renderCart() {
+  var el = document.getElementById('cart-items');
+  var foot = document.getElementById('cart-foot');
+  if (cart.length === 0) {
+    el.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
+    foot.style.display = 'none'; return;
+  }
+  foot.style.display = '';
+  el.innerHTML = cart.map(function(item) {
+    return '<div class="cart-row" data-id="'+encodeURIComponent(item.id)+'">'
+      + '<img class="cart-row-img" src="'+item.image+'" alt="'+item.name+'">'
+      + '<div class="cart-row-info"><div class="cart-row-name">'+item.name+'</div>'
+      + '<div class="cart-row-price">'+(item.price * item.qty).toLocaleString('ru-RU')+' ₽</div></div>'
+      + '<div class="cart-row-qty">'
+      + '<button class="cart-qty-btn" data-minus="'+encodeURIComponent(item.id)+'">−</button>'
+      + '<span class="cart-qty-num">'+item.qty+'</span>'
+      + '<button class="cart-qty-btn" data-plus="'+encodeURIComponent(item.id)+'">+</button>'
+      + '</div>'
+      + '<button class="cart-row-del" data-del="'+encodeURIComponent(item.id)+'">✕</button>'
+      + '</div>';
+  }).join('');
+  document.getElementById('cart-total').textContent = cartTotal().toLocaleString('ru-RU') + ' ₽';
+
+  el.querySelectorAll('[data-plus]').forEach(function(b) {
+    b.onclick = function() { var item = cart.find(function(i){ return i.id===decodeURIComponent(b.dataset.plus); }); if(item) item.qty++; updateBadge(); renderCart(); };
+  });
+  el.querySelectorAll('[data-minus]').forEach(function(b) {
+    b.onclick = function() { var idx = cart.findIndex(function(i){ return i.id===decodeURIComponent(b.dataset.minus); }); if(idx<0) return; cart[idx].qty--; if(cart[idx].qty<=0) cart.splice(idx,1); updateBadge(); renderCart(); };
+  });
+  el.querySelectorAll('[data-del]').forEach(function(b) {
+    b.onclick = function() { var idx = cart.findIndex(function(i){ return i.id===decodeURIComponent(b.dataset.del); }); if(idx>=0) cart.splice(idx,1); updateBadge(); renderCart(); };
+  });
+}
+
+function openCart() { renderCart(); document.getElementById('cart-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); document.body.style.overflow=''; }
+
+document.getElementById('cart-fab').onclick = openCart;
+document.getElementById('cart-close').onclick = closeCart;
+document.getElementById('cart-overlay').onclick = function(e) { if(e.target===this) closeCart(); };
+document.getElementById('cart-checkout').onclick = function() { if(cart.length===0) return; closeCart(); openOrder(); };
+
+// ===== ORDER POPUP =====
+function openOrder() {
+  var summary = document.getElementById('popup-cart-summary');
+  summary.innerHTML = cart.map(function(item){
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #2a3c2a;font-size:13px;">'
+      + '<span style="color:#e8f0e4;flex:1;margin-right:8px;">'+item.name+(item.qty>1?' ×'+item.qty:'')+'</span>'
+      + '<span style="color:#8fb88a;white-space:nowrap;">'+(item.price*item.qty).toLocaleString('ru-RU')+' ₽</span>'
+      + '</div>';
+  }).join('')
+  + '<div style="display:flex;justify-content:space-between;padding:8px 0 0;font-size:14px;font-weight:700;">'
+  + '<span style="color:#9fb89c;">Итого</span>'
+  + '<span style="color:#e8f0e4;">'+cartTotal().toLocaleString('ru-RU')+' ₽</span></div>';
+
+  document.getElementById('o-name').value=''; document.getElementById('o-phone').value='';
+  document.getElementById('o-delivery').value=''; document.getElementById('o-address').value='';
+  document.getElementById('o-datetime-delivery').value=''; document.getElementById('o-datetime-pickup').value='';
+  document.getElementById('o-comment').value='';
+  document.getElementById('o-error').className='popup-error';
+  document.getElementById('popup-form-wrap').style.display='';
+  document.getElementById('popup-success').style.display='none';
+  document.getElementById('block-delivery').className='popup-delivery-block';
+  document.getElementById('block-pickup').className='popup-delivery-block';
   document.getElementById('order-popup').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
 
-function closeOrder() {
-  document.getElementById('order-popup').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
+function closeOrder() { document.getElementById('order-popup').classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('popup-close').onclick = closeOrder;
-document.getElementById('order-popup').onclick = function(e) {
-  if (e.target === this) closeOrder();
-};
-
+document.getElementById('order-popup').onclick = function(e) { if(e.target===this) closeOrder(); };
 document.getElementById('o-delivery').onchange = function() {
-  document.getElementById('block-delivery').className = 'popup-delivery-block' + (this.value === 'delivery' ? ' show' : '');
-  document.getElementById('block-pickup').className   = 'popup-delivery-block' + (this.value === 'pickup'   ? ' show' : '');
+  document.getElementById('block-delivery').className='popup-delivery-block'+(this.value==='delivery'?' show':'');
+  document.getElementById('block-pickup').className='popup-delivery-block'+(this.value==='pickup'?' show':'');
 };
 
 document.getElementById('o-submit').onclick = async function() {
-  var name     = document.getElementById('o-name').value.trim();
-  var phone    = document.getElementById('o-phone').value.trim();
-  var delivery = document.getElementById('o-delivery').value;
-  var address  = document.getElementById('o-address').value.trim();
-  var dtDel    = document.getElementById('o-datetime-delivery').value.trim();
-  var dtPick   = document.getElementById('o-datetime-pickup').value.trim();
-  var comment  = document.getElementById('o-comment').value.trim();
-  var err      = document.getElementById('o-error');
+  var name=document.getElementById('o-name').value.trim();
+  var phone=document.getElementById('o-phone').value.trim();
+  var delivery=document.getElementById('o-delivery').value;
+  var address=document.getElementById('o-address').value.trim();
+  var dtDel=document.getElementById('o-datetime-delivery').value.trim();
+  var dtPick=document.getElementById('o-datetime-pickup').value.trim();
+  var comment=document.getElementById('o-comment').value.trim();
+  var err=document.getElementById('o-error');
 
-  if (!name || !phone || !delivery) {
-    err.textContent = 'Пожалуйста, заполните имя, телефон и способ получения.'; err.className = 'popup-error show'; return;
-  }
-  if (delivery === 'delivery' && (!address || !dtDel)) {
-    err.textContent = 'Укажите адрес и время доставки.'; err.className = 'popup-error show'; return;
-  }
-  if (delivery === 'pickup' && !dtPick) {
-    err.textContent = 'Укажите время самовывоза.'; err.className = 'popup-error show'; return;
-  }
+  if(!name||!phone||!delivery){ err.textContent='Пожалуйста, заполните имя, телефон и способ получения.'; err.className='popup-error show'; return; }
+  if(delivery==='delivery'&&(!address||!dtDel)){ err.textContent='Укажите адрес и время доставки.'; err.className='popup-error show'; return; }
+  if(delivery==='pickup'&&!dtPick){ err.textContent='Укажите время самовывоза.'; err.className='popup-error show'; return; }
 
-  var deliveryLine = delivery === 'delivery'
-    ? '🚚 Доставка\n📍 Адрес: ' + address + '\n🕐 Время: ' + dtDel
-    : '🏪 Самовывоз\n🕐 Готовность: ' + dtPick;
+  var deliveryLine = delivery==='delivery'
+    ? '🚚 Доставка\n📍 Адрес: '+address+'\n🕐 Время: '+dtDel
+    : '🏪 Самовывоз\n🕐 Готовность: '+dtPick;
+
+  var itemsText = cart.map(function(item){
+    return '• '+item.name+(item.qty>1?' ×'+item.qty:'')+' — '+(item.price*item.qty).toLocaleString('ru-RU')+' ₽'
+      +(item.desc?'\n  '+item.desc:'')
+      +(item.image?'\n  Фото: '+item.image:'');
+  }).join('\n');
 
   var text = '🌸 *Новый заказ*\n\n'
-    + '👤 Имя: ' + name + '\n'
-    + '📞 Телефон: ' + phone + '\n\n'
-    + deliveryLine + '\n\n'
-    + '💐 *Букет:* ' + currentItem.name + '\n'
-    + '💰 Цена: ' + Number(currentItem.price).toLocaleString('ru-RU') + ' ₽\n'
-    + (currentItem.desc ? '📝 Описание: ' + currentItem.desc + '\n' : '')
-    + (currentItem.image ? '🖼 Фото: ' + currentItem.image + '\n' : '')
-    + (comment ? '\n💬 Комментарий: ' + comment : '');
+    +'👤 Имя: '+name+'\n'
+    +'📞 Телефон: '+phone+'\n\n'
+    +deliveryLine+'\n\n'
+    +'💐 *Состав заказа:*\n'+itemsText+'\n\n'
+    +'💰 *Итого: '+cartTotal().toLocaleString('ru-RU')+' ₽*'
+    +(comment?'\n\n💬 Комментарий: '+comment:'');
 
-  var btn = document.getElementById('o-submit');
-  btn.disabled = true; btn.textContent = 'Отправляем...';
-
+  var btn=document.getElementById('o-submit');
+  btn.disabled=true; btn.textContent='Отправляем...';
   try {
-    var r = await fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TG_CHAT, text: text, parse_mode: 'Markdown' })
+    var r=await fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:TG_CHAT,text:text,parse_mode:'Markdown'})
     });
-    var data = await r.json();
-    if (!data.ok) throw new Error(data.description);
-    document.getElementById('popup-form-wrap').style.display = 'none';
-    document.getElementById('popup-success').style.display = '';
+    var data=await r.json();
+    if(!data.ok) throw new Error(data.description);
+    cart=[]; updateBadge();
+    document.getElementById('popup-form-wrap').style.display='none';
+    document.getElementById('popup-success').style.display='';
   } catch(e) {
-    err.textContent = 'Ошибка отправки. Попробуйте ещё раз или позвоните нам.';
-    err.className = 'popup-error show';
-  } finally {
-    btn.disabled = false; btn.textContent = 'Отправить заказ';
-  }
+    err.textContent='Ошибка отправки. Попробуйте ещё раз или позвоните нам.'; err.className='popup-error show';
+  } finally { btn.disabled=false; btn.textContent='Отправить заказ'; }
 };
 
+// ===== CATALOG =====
 (function(){
-  var OWNER    = "roman-bur";
-  var REPO     = "flower-catalog";
-  var BRANCH   = "main";
-  var FILE     = "catalog.json";
-  var WHATSAPP = "79270810209";
-
-  var CATEGORIES = ["WOW","Хиты продаж","Розы","Кустовые розы","Комбо-наборы","Авторские букеты",
-    "Корзины","Монобукеты","Гиганты","По цветам","Супер-цена","По цвету","Воздушные шары",
-    "Букеты невесты","Ритуальная флористика"];
-
-  var url = "https://api.github.com/repos/"+OWNER+"/"+REPO+"/contents/"+FILE;
-  var ITEMS = [], active = null;
-
+  var OWNER='roman-bur', REPO='flower-catalog', FILE='catalog.json';
+  var CATEGORIES=["WOW","Хиты продаж","Розы","Кустовые розы","Комбо-наборы","Авторские букеты","Корзины","Монобукеты","Гиганты","По цветам","Супер-цена","По цвету","Воздушные шары","Букеты невесты","Ритуальная флористика"];
+  var url='https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+FILE;
+  var ITEMS=[], active=null;
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function rub(n){ return Number(n).toLocaleString('ru-RU'); }
-  function cats(it){ return Array.isArray(it.categories) ? it.categories : (it.category?[it.category]:[]); }
-  function wa(name){ return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent("Здравствуйте! Хочу заказать: "+name); }
+  function cats(it){ return Array.isArray(it.categories)?it.categories:(it.category?[it.category]:[]); }
 
   function renderTabs(){
-    var box = document.getElementById('fcat-tabs'); if(!box) return;
-    var used = CATEGORIES.filter(function(c){ return ITEMS.some(function(it){ return cats(it).indexOf(c)>=0; }); });
-    var html = tab('Все', null);
-    used.forEach(function(c){ html += tab(c, c); });
-    box.innerHTML = html;
-    box.querySelectorAll('[data-tab]').forEach(function(b){
-      b.onclick = function(){ active = b.getAttribute('data-tab') || null; renderTabs(); renderGrid(); };
-    });
-    function tab(label, val){
-      var on = (active===val) ? ' on' : '';
-      return '<button class="fcat-tab'+on+'" data-tab="'+(val==null?'':esc(val))+'">'+esc(label)+'</button>';
-    }
+    var box=document.getElementById('fcat-tabs'); if(!box) return;
+    var used=CATEGORIES.filter(function(c){ return ITEMS.some(function(it){ return cats(it).indexOf(c)>=0; }); });
+    var html=tab('Все',null);
+    used.forEach(function(c){ html+=tab(c,c); });
+    box.innerHTML=html;
+    box.querySelectorAll('[data-tab]').forEach(function(b){ b.onclick=function(){ active=b.getAttribute('data-tab')||null; renderTabs(); renderGrid(); }; });
+    function tab(label,val){ var on=(active===val)?' on':''; return '<button class="fcat-tab'+on+'" data-tab="'+(val==null?'':esc(val))+'">'+esc(label)+'</button>'; }
   }
 
   function renderGrid(){
-    var grid = document.getElementById('flower-catalog'); if(!grid) return;
-    var list = active==null ? ITEMS : ITEMS.filter(function(it){ return cats(it).indexOf(active)>=0; });
-    if(!list.length){ grid.innerHTML = '<div class="fcat-msg">В этой категории пока пусто.</div>'; return; }
-    grid.innerHTML = list.map(function(it){
-      var c = cats(it);
-      var eyebrow = c.length ? '<div class="fcat-eyebrow">'+esc(c[0])+'</div>' : '';
-      var btn = WHATSAPP ? '<button class="fcat-btn" onclick="openOrder(\''+esc(it.name)+'\',\''+esc(it.description)+'\',\''+esc(it.price)+'\',\''+esc(it.image)+'\')">В корзину</button>' : '';
+    var grid=document.getElementById('flower-catalog'); if(!grid) return;
+    var list=active==null?ITEMS:ITEMS.filter(function(it){ return cats(it).indexOf(active)>=0; });
+    if(!list.length){ grid.innerHTML='<div class="fcat-msg">В этой категории пока пусто.</div>'; return; }
+    grid.innerHTML=list.map(function(it){
+      var c=cats(it);
+      var eyebrow=c.length?'<div class="fcat-eyebrow">'+esc(c[0])+'</div>':'';
+      var btn='<button class="fcat-btn" onclick="addToCart(\''+esc(it.name)+'\',\''+esc(it.description||'')+'\',\''+esc(it.price)+'\',\''+esc(it.image)+'\')">В корзину</button>';
       return '<div class="fcat-card">'
-        + '<img class="fcat-img" src="'+esc(it.image)+'" alt="'+esc(it.name)+'" loading="lazy">'
-        + '<div class="fcat-body">'+eyebrow
-        + '<div class="fcat-name">'+esc(it.name)+'</div>'
-        + '<div class="fcat-desc">'+esc(it.description)+'</div>'
-        + '<div class="fcat-price">'+rub(it.price)+' ₽</div>'+btn
-        + '</div></div>';
+        +'<img class="fcat-img" src="'+esc(it.image)+'" alt="'+esc(it.name)+'" loading="lazy">'
+        +'<div class="fcat-body">'+eyebrow
+        +'<div class="fcat-name">'+esc(it.name)+'</div>'
+        +'<div class="fcat-desc">'+esc(it.description)+'</div>'
+        +'<div class="fcat-price">'+rub(it.price)+' ₽</div>'+btn
+        +'</div></div>';
     }).join('');
   }
 
   fetch(url).then(function(r){ return r.json(); }).then(function(resp){
-    var items = JSON.parse(decodeURIComponent(escape(atob(resp.content.replace(/\n/g,'')))));
-    ITEMS = Array.isArray(items) ? items.filter(function(it){ return it && typeof it==='object'; }) : [];
+    var items=JSON.parse(decodeURIComponent(escape(atob(resp.content.replace(/\n/g,'')))));
+    ITEMS=Array.isArray(items)?items.filter(function(it){ return it&&typeof it==='object'; }):[];
     if(!ITEMS.length){ document.getElementById('flower-catalog').innerHTML='<div class="fcat-msg">Каталог скоро появится.</div>'; return; }
     renderTabs(); renderGrid();
-  }).catch(function(){
-    document.getElementById('flower-catalog').innerHTML='<div class="fcat-msg">Не удалось загрузить каталог.</div>';
-  });
+  }).catch(function(){ document.getElementById('flower-catalog').innerHTML='<div class="fcat-msg">Не удалось загрузить каталог.</div>'; });
 })();
 </script>
 </body>
