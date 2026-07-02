@@ -44,7 +44,15 @@
     "price": 2220,
     "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459.jpg",
     "categories": [
-      "Кустовые розы"
+      "Кустовые розы",
+      "WOW",
+      "Гиганты"
+    ],
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459.jpg",
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459_2.jpg",
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459_3.jpg",
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459_4.jpg"
     ]
   },
   {
