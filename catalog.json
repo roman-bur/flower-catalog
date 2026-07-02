@@ -26,5 +26,15 @@
     "categories": [
       "Кустовые розы"
     ]
+  },
+  {
+    "id": "fl1782979283735",
+    "name": "121",
+    "description": "121",
+    "price": 300,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782979283735.jpg",
+    "categories": [
+      "По цветам"
+    ]
   }
 ]
