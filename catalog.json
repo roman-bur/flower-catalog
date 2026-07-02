@@ -1,0 +1,12 @@
+[
+  {
+    "id": "fl1782976693268",
+    "name": "большой букет",
+    "description": "много много цветов",
+    "price": 3000,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782976693268.jpg",
+    "categories": [
+      "WOW"
+    ]
+  }
+]
