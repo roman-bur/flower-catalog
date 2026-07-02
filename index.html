@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ресторан Цветов — Авторские букеты</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
+
+/* ========== HEADER ========== */
+.rc-header-wrap { background: #1e2e1e; width: 100%; }
+.rc-header {
+  max-width: 1200px; margin: 0 auto; padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.rc-header__left { display: flex; align-items: center; }
+.rc-header__phone {
+  font-size: 18px; font-weight: 600; color: #e8f0e4;
+  text-decoration: none; white-space: nowrap; letter-spacing: 0.5px; transition: color .2s;
+}
+.rc-header__phone:hover { color: #a3c4a0; }
+.rc-header__center { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.rc-logo {
+  font-size: 24px; font-weight: 700; color: #e8f0e4;
+  letter-spacing: 3px; text-transform: uppercase; text-decoration: none; line-height: 1.1; transition: color .2s;
+}
+.rc-logo:hover { color: #a3c4a0; }
+.rc-logo span { color: #a3c4a0; }
+.rc-logo-sub { font-size: 9px; color: #9fb89c; letter-spacing: 2px; text-transform: uppercase; }
+.rc-header__right { display: flex; align-items: center; gap: 10px; }
+.rc-icon-btn {
+  position: relative; width: 40px; height: 40px; border-radius: 10px;
+  border: 1px solid #3e523e; background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color .2s, background .2s;
+  text-decoration: none; color: #e8f0e4;
+}
+.rc-icon-btn:hover { border-color: #a3c4a0; background: rgba(163,196,160,0.1); }
+.rc-icon-btn svg { width: 20px; height: 20px; fill: #e8f0e4; }
+.rc-icon-max-text { font-size: 10px; font-weight: 800; color: #e8f0e4; letter-spacing: 0.5px; font-family: Arial, sans-serif; }
+.rc-divider { max-width: 1200px; margin: 0 auto; border: none; border-top: 1px solid #3e523e; }
+
+/* ========== GALLERY ========== */
+.rc-gallery { background: #1a2b1a; width: 100%; padding: 0 20px 40px; position: relative; overflow: hidden; }
+.rc-gallery__inner { max-width: 1200px; margin: 0 auto; }
+.rc-gallery__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap: 16px; padding-top: 30px; }
+.rc-gallery__label { font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #8fb88a; }
+.rc-gallery__dots { display: flex; gap: 10px; }
+.rc-gallery__dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid rgba(143,184,138,0.35); background: transparent;
+  cursor: pointer; padding: 0; transition: all .25s ease;
+}
+.rc-gallery__dot--active { background: #8fb88a; border-color: #8fb88a; }
+.rc-gallery__dot:hover { border-color: #a8d4a0; }
+.rc-gallery__track { position: relative; width: 100%; border-radius: 16px; overflow: hidden; aspect-ratio: 16/5; min-height: 280px; }
+.rc-gallery__slide { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility .6s ease; }
+.rc-gallery__slide--active { opacity: 1; visibility: visible; }
+.rc-gallery__slide-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.rc-gallery__slide-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(26,43,26,0.96) 0%, rgba(26,43,26,0.7) 30%, transparent 60%); }
+.rc-gallery__slide-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 48px; max-width: 50%; }
+.rc-gallery__slide-title { font-size: 42px; font-weight: 700; color: #e6f0e3; line-height: 1.12; margin: 0 0 14px; }
+.rc-gallery__slide-desc { font-size: 16px; color: #98b894; line-height: 1.5; margin: 0 0 28px; }
+.rc-gallery__slide-cta {
+  display: inline-flex; align-self: flex-start; font-size: 12px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase; color: #e6f0e3;
+  background: transparent; border: 2px solid rgba(230,240,227,0.4); border-radius: 4px;
+  padding: 14px 28px; text-decoration: none; cursor: pointer; transition: all .25s ease;
+}
+.rc-gallery__slide-cta:hover { background: rgba(143,184,138,0.2); border-color: #a8d4a0; color: #fff; }
+.rc-gallery__arrows { position: absolute; top: 50%; right: 32px; transform: translateY(-50%); z-index: 5; display: flex; gap: 8px; }
+.rc-gallery__arrow {
+  width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(230,240,227,0.3);
+  background: rgba(26,43,26,0.45); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; transition: all .25s ease;
+}
+.rc-gallery__arrow:hover { background: rgba(143,184,138,0.3); border-color: #a8d4a0; }
+.rc-gallery__arrow svg { width: 20px; height: 20px; fill: none; stroke: #e6f0e3; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ========== CATALOG ========== */
+.fcat-section { background: #19271a; padding: 60px 0; }
+.fcat-section-title { text-align: center; font-size: 32px; font-weight: 700; color: #e8f0e4; margin-bottom: 8px; }
+.fcat-section-sub { text-align: center; font-size: 15px; color: #7a9278; margin-bottom: 40px; }
+.fcat-wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; font-family: 'Inter', Arial, sans-serif; }
+.fcat-tabs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 0 0 30px; }
+.fcat-tab {
+  border: 1px solid #3E5647; background: transparent; color: #B9C9BD;
+  padding: 9px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; cursor: pointer; transition: .15s;
+}
+.fcat-tab:hover { border-color: #7E9C82; color: #F1F4EF; }
+.fcat-tab.on { background: #7E9C82; border-color: #7E9C82; color: #16241A; }
+.fcat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; }
+.fcat-msg { grid-column: 1/-1; text-align: center; color: #9FB4A4; padding: 40px; }
+.fcat-card { border: 1px solid #3E5647; border-radius: 16px; overflow: hidden; background: #2C3E31; transition: transform .25s ease, box-shadow .25s ease; display: flex; flex-direction: column; }
+.fcat-card:hover { transform: translateY(-6px); box-shadow: 0 16px 38px rgba(0,0,0,.32); }
+.fcat-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; background: #22301F; display: block; }
+.fcat-body { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.fcat-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #8FB096; }
+.fcat-name { font-size: 17px; font-weight: 600; color: #F1F4EF; line-height: 1.3; }
+.fcat-desc { font-size: 14px; color: #9FB4A4; line-height: 1.45; flex: 1; }
+.fcat-price { font-size: 20px; font-weight: 700; color: #fff; margin: 8px 0 2px; }
+.fcat-btn { display: block; text-align: center; text-decoration: none; margin-top: 10px; background: #7E9C82; color: #F3F7F1; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 600; transition: background .15s; }
+.fcat-btn:hover { background: #6E8B73; }
+
+/* ========== FOOTER ========== */
+.rc-footer { background: #1a281a; color: #9fb89c; border-top: 1px solid #3e523e; }
+.rc-footer__inner { max-width: 1200px; margin: 0 auto; padding: 52px 20px 32px; }
+.rc-footer__top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 44px; }
+.rc-footer__brand { display: flex; flex-direction: column; gap: 16px; }
+.rc-footer__logo { display: flex; align-items: center; gap: 10px; }
+.rc-footer__logo-icon { width: 36px; height: 36px; background: #7fa67c; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rc-footer__logo-icon svg { width: 20px; height: 20px; }
+.rc-footer__logo-text { font-size: 18px; font-weight: 700; color: #e8f0e4; letter-spacing: 0.5px; }
+.rc-footer__desc { font-size: 13px; line-height: 1.7; color: #7a9278; max-width: 280px; }
+.rc-footer__socials { display: flex; gap: 10px; }
+.rc-footer__social { width: 36px; height: 36px; border-radius: 10px; border: 1px solid #3e523e; display: flex; align-items: center; justify-content: center; transition: all .2s; text-decoration: none; background: transparent; }
+.rc-footer__social:hover { border-color: #a3c4a0; background: rgba(163,196,160,0.1); }
+.rc-footer__social svg { width: 16px; height: 16px; fill: #9fb89c; }
+.rc-footer__social-max { font-size: 9px; font-weight: 800; color: #9fb89c; font-family: Arial, sans-serif; letter-spacing: 0.3px; }
+.rc-footer__col-title { font-size: 12px; font-weight: 700; color: #e8f0e4; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+.rc-footer__nav { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.rc-footer__nav a { font-size: 13px; color: #7a9278; text-decoration: none; transition: color .2s; display: inline-flex; align-items: center; gap: 6px; }
+.rc-footer__nav a:hover { color: #a3c4a0; }
+.rc-footer__nav a::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: #3e523e; flex-shrink: 0; transition: background .2s; }
+.rc-footer__nav a:hover::before { background: #a3c4a0; }
+.rc-footer__addresses { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.rc-footer__address-item { font-size: 12px; color: #7a9278; line-height: 1.5; padding-left: 10px; border-left: 2px solid #3e523e; }
+.rc-footer__requisites { margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid #2a3c2a; }
+.rc-footer__requisites-title { font-size: 11px; font-weight: 700; color: #e8f0e4; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.rc-footer__requisites-row { font-size: 11px; color: #5c745a; line-height: 1.8; }
+.rc-footer__bottom { border-top: 1px solid #2a3c2a; padding-top: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.rc-footer__copy { font-size: 12px; color: #5c745a; }
+.rc-footer__legal { display: flex; align-items: center; gap: 20px; list-style: none; }
+.rc-footer__legal a { font-size: 12px; color: #5c745a; text-decoration: none; transition: color .2s; }
+.rc-footer__legal a:hover { color: #a3c4a0; }
+.rc-footer__legal-sep { width: 3px; height: 3px; border-radius: 50%; background: #3e523e; flex-shrink: 0; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 960px) {
+  .rc-header { justify-content: center; text-align: center; }
+  .rc-header__left, .rc-header__right { justify-content: center; }
+  .rc-gallery__slide-title { font-size: 32px; }
+  .rc-gallery__slide-content { max-width: 55%; padding: 36px; }
+  .rc-footer__top { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 640px) {
+  .rc-header { padding: 10px 16px; gap: 10px; }
+  .rc-logo { font-size: 20px; letter-spacing: 2px; }
+  .rc-header__phone { font-size: 16px; }
+  .rc-header__left, .rc-header__right { width: 100%; justify-content: center; }
+  .rc-gallery { padding: 24px 16px; }
+  .rc-gallery__track { aspect-ratio: 16/9; min-height: 300px; border-radius: 12px; }
+  .rc-gallery__slide-overlay { background: linear-gradient(to top, rgba(26,43,26,0.96) 0%, rgba(26,43,26,0.7) 35%, transparent 70%); }
+  .rc-gallery__slide-content { max-width: 100%; justify-content: flex-end; padding: 24px 24px 48px; }
+  .rc-gallery__slide-title { font-size: 24px; }
+  .rc-gallery__slide-desc { font-size: 14px; margin-bottom: 20px; }
+  .rc-gallery__arrows { top: auto; bottom: 20px; right: 20px; transform: none; }
+  .rc-gallery__arrow { width: 40px; height: 40px; }
+  .fcat-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .rc-footer__inner { padding: 40px 16px 24px; }
+  .rc-footer__top { grid-template-columns: 1fr; gap: 28px; }
+  .rc-footer__bottom { flex-direction: column; text-align: center; }
+  .rc-footer__legal { justify-content: center; flex-wrap: wrap; gap: 12px; }
+}
+@media (max-width: 480px) {
+  .rc-icon-btn { width: 36px; height: 36px; }
+  .rc-icon-btn svg { width: 18px; height: 18px; }
+  .rc-header__right { gap: 8px; }
+  .rc-header__phone { font-size: 15px; }
+  .rc-logo { font-size: 18px; }
+  .rc-gallery__track { min-height: 260px; border-radius: 10px; }
+  .rc-gallery__slide-content { padding: 18px 16px 44px; }
+  .rc-gallery__slide-title { font-size: 20px; }
+  .rc-gallery__slide-desc { font-size: 13px; margin-bottom: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="rc-header-wrap">
+  <header class="rc-header">
+    <div class="rc-header__left">
+      <a href="tel:+79270810209" class="rc-header__phone">+7 (927) 081-02-09</a>
+    </div>
+    <div class="rc-header__center">
+      <a href="#" class="rc-logo">РЕСТОРАН <span>ЦВЕТОВ</span></a>
+      <div class="rc-logo-sub">Семейная цветочная кухня</div>
+    </div>
+    <div class="rc-header__right">
+      <a href="https://t.me/flora_rest_ufa" target="_blank" class="rc-icon-btn" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+      </a>
+      <a href="https://wa.me/79270810209" target="_blank" class="rc-icon-btn" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="https://max.ru/u/f9LHodD0cOJyRo2eQLxATgvf6Rlow2KieRRZRkSwlWTfTggI-S1Ozqfp37c" target="_blank" class="rc-icon-btn" aria-label="Макс">
+        <span class="rc-icon-max-text">MAX</span>
+      </a>
+      <a href="https://vk.com/market-222119916?screen=group" target="_blank" class="rc-icon-btn" aria-label="ВКонтакте">
+        <svg viewBox="0 0 24 24"><path d="M19.915 13.028c-.388-.49-.277-.708 0-1.146.005-.005 3.841-5.354 4.237-7.165l.002-.001c.194-.657 0-1.141-.947-1.141h-3.128c-.797 0-1.164.418-1.358.88 0 0-1.591 3.827-3.845 6.31-.728.718-1.06.947-1.457.947-.2 0-.489-.229-.489-.886V4.716c0-.793-.231-1.141-.893-1.141H8.778c-.5 0-.799.366-.799.714 0 .748 1.13.921 1.245 3.025v4.57c0 1.006-.183 1.188-.58 1.188-.728 0-2.5-2.836-3.548-6.083C4.88 3.96 4.58 3.57 3.777 3.57H.645C-.25 3.57-.43 3.988-.43 4.45c0 .818.728 4.871 3.388 10.23 1.774 3.564 4.272 5.498 6.545 5.498 1.364 0 1.532-.303 1.532-1.076v-2.484c0-.884.188-1.059.813-1.059.461 0 1.252.229 3.098 1.989C17.179 19.407 17.52 20.178 18.617 20.178h3.128c.894 0 1.346-.303.109-2.033-.847-1.232-2.967-3.489-3.939-4.117z"/></svg>
+      </a>
+    </div>
+  </header>
+  <hr class="rc-divider">
+</div>
+
+<!-- ========== SLIDER ========== -->
+<div class="rc-gallery">
+  <div class="rc-gallery__inner">
+    <div class="rc-gallery__header">
+      <span class="rc-gallery__label">Акции и спецпредложения</span>
+      <div class="rc-gallery__dots">
+        <button class="rc-gallery__dot rc-gallery__dot--active" type="button" data-slide="0" aria-label="Слайд 1"></button>
+        <button class="rc-gallery__dot" type="button" data-slide="1" aria-label="Слайд 2"></button>
+        <button class="rc-gallery__dot" type="button" data-slide="2" aria-label="Слайд 3"></button>
+        <button class="rc-gallery__dot" type="button" data-slide="3" aria-label="Слайд 4"></button>
+      </div>
+    </div>
+    <div class="rc-gallery__track">
+      <div class="rc-gallery__slide rc-gallery__slide--active">
+        <img class="rc-gallery__slide-img" src="https://static.tildacdn.ink/tild3463-3631-4436-a662-383336303566/photo-1680563899402-.jpg" alt="8 июля — День Семьи">
+        <div class="rc-gallery__slide-overlay"></div>
+        <div class="rc-gallery__slide-content">
+          <h2 class="rc-gallery__slide-title">8 июля — День Семьи</h2>
+          <p class="rc-gallery__slide-desc">Оформите предзаказ на букеты самым любимым</p>
+          <a href="#catalog" class="rc-gallery__slide-cta">Смотреть коллекцию</a>
+        </div>
+      </div>
+      <div class="rc-gallery__slide">
+        <img class="rc-gallery__slide-img" src="https://static.tildacdn.ink/tild6638-6432-4065-b861-613261613339/photo-1563730031910-.jpg" alt="Белые розы со скидкой до 30%">
+        <div class="rc-gallery__slide-overlay"></div>
+        <div class="rc-gallery__slide-content">
+          <h2 class="rc-gallery__slide-title">Белые розы со скидкой до 30%</h2>
+          <p class="rc-gallery__slide-desc">Изысканные букеты из свежих роз по выгодным ценам</p>
+          <a href="#catalog" class="rc-gallery__slide-cta">Выбрать букет</a>
+        </div>
+      </div>
+      <div class="rc-gallery__slide">
+        <img class="rc-gallery__slide-img" src="https://static.tildacdn.ink/tild3233-3765-4864-a461-643238663532/photo-1579664872746-.jpg" alt="Летняя свадьба с пионами">
+        <div class="rc-gallery__slide-overlay"></div>
+        <div class="rc-gallery__slide-content">
+          <h2 class="rc-gallery__slide-title">Летняя свадьба с пионами</h2>
+          <p class="rc-gallery__slide-desc">Нежнейшие композиции для вашего торжества</p>
+          <a href="#catalog" class="rc-gallery__slide-cta">Узнать подробнее</a>
+        </div>
+      </div>
+      <div class="rc-gallery__slide">
+        <img class="rc-gallery__slide-img" src="https://static.tildacdn.ink/tild3632-3236-4830-a636-366237626431/photo-1488928741225-.jpg" alt="Тюльпаны">
+        <div class="rc-gallery__slide-overlay"></div>
+        <div class="rc-gallery__slide-content">
+          <h2 class="rc-gallery__slide-title">Тюльпаны — цвети настроение</h2>
+          <p class="rc-gallery__slide-desc">Яркие букеты для тех, кто любит краски лета</p>
+          <a href="#catalog" class="rc-gallery__slide-cta">Заказать сейчас</a>
+        </div>
+      </div>
+      <div class="rc-gallery__arrows">
+        <button class="rc-gallery__arrow rc-gallery__arrow--prev" type="button" aria-label="Предыдущий">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="rc-gallery__arrow rc-gallery__arrow--next" type="button" aria-label="Следующий">
+          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CATALOG ========== -->
+<section class="fcat-section" id="catalog">
+  <h2 class="fcat-section-title">Каталог</h2>
+  <p class="fcat-section-sub">Свежие букеты с доставкой по городу и пригороду</p>
+  <div class="fcat-wrap">
+    <div class="fcat-tabs" id="fcat-tabs"></div>
+    <div id="flower-catalog" class="fcat-grid">
+      <div class="fcat-msg">Загружаем каталог…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="rc-footer">
+  <div class="rc-footer__inner">
+    <div class="rc-footer__top">
+      <div class="rc-footer__brand">
+        <div class="rc-footer__logo">
+          <div class="rc-footer__logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1e2e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+              <line x1="9" y1="9" x2="9.01" y2="9"/>
+              <line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+          </div>
+          <span class="rc-footer__logo-text">Ресторан Цветов</span>
+        </div>
+        <p class="rc-footer__desc">Свежие цветы и авторские букеты с доставкой по городу и пригороду. Семейная цветочная кухня с любовью к деталям.</p>
+        <div class="rc-footer__socials">
+          <a href="https://t.me/flora_rest_ufa" target="_blank" class="rc-footer__social" aria-label="Telegram">
+            <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          </a>
+          <a href="https://wa.me/79270810209" target="_blank" class="rc-footer__social" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://max.ru/u/f9LHodD0cOJyRo2eQLxATgvf6Rlow2KieRRZRkSwlWTfTggI-S1Ozqfp37c" target="_blank" class="rc-footer__social" aria-label="MAX">
+            <span class="rc-footer__social-max">MAX</span>
+          </a>
+          <a href="https://vk.com/market-222119916?screen=group" target="_blank" class="rc-footer__social" aria-label="ВКонтакте">
+            <svg viewBox="0 0 24 24"><path d="M19.915 13.028c-.388-.49-.277-.708 0-1.146.005-.005 3.841-5.354 4.237-7.165l.002-.001c.194-.657 0-1.141-.947-1.141h-3.128c-.797 0-1.164.418-1.358.88 0 0-1.591 3.827-3.845 6.31-.728.718-1.06.947-1.457.947-.2 0-.489-.229-.489-.886V4.716c0-.793-.231-1.141-.893-1.141H8.778c-.5 0-.799.366-.799.714 0 .748 1.13.921 1.245 3.025v4.57c0 1.006-.183 1.188-.58 1.188-.728 0-2.5-2.836-3.548-6.083C4.88 3.96 4.58 3.57 3.777 3.57H.645C-.25 3.57-.43 3.988-.43 4.45c0 .818.728 4.871 3.388 10.23 1.774 3.564 4.272 5.498 6.545 5.498 1.364 0 1.532-.303 1.532-1.076v-2.484c0-.884.188-1.059.813-1.059.461 0 1.252.229 3.098 1.989C17.179 19.407 17.52 20.178 18.617 20.178h3.128c.894 0 1.346-.303.109-2.033-.847-1.232-2.967-3.489-3.939-4.117z"/></svg>
+          </a>
+        </div>
+        <div class="rc-footer__requisites">
+          <div class="rc-footer__requisites-title">Реквизиты</div>
+          <div class="rc-footer__requisites-row">
+            ИП Бурцева Анна Геннадьевна<br>
+            ИНН: 027805990331<br>
+            ОГРНИП: 317028000004560<br>
+            Респ. Башкортостан, с.Зубово,<br>ул. Серебряная, д.68
+          </div>
+        </div>
+      </div>
+      <div class="rc-footer__col">
+        <div class="rc-footer__col-title">Каталог</div>
+        <ul class="rc-footer__nav">
+          <li><a href="#catalog">WOW коллекция</a></li>
+          <li><a href="#catalog">Авторские букеты</a></li>
+          <li><a href="#catalog">Розы</a></li>
+          <li><a href="#catalog">Кустовые розы</a></li>
+          <li><a href="#catalog">Гиганты</a></li>
+          <li><a href="#catalog">Комбо-наборы</a></li>
+          <li><a href="#catalog">Монобукеты</a></li>
+          <li><a href="#catalog">Букеты невесты</a></li>
+        </ul>
+      </div>
+      <div class="rc-footer__col">
+        <div class="rc-footer__col-title">Покупателям</div>
+        <ul class="rc-footer__nav">
+          <li><a href="#">Доставка и оплата</a></li>
+          <li><a href="#">Как сделать заказ</a></li>
+          <li><a href="#">Акции и скидки</a></li>
+          <li><a href="#">Отзывы</a></li>
+          <li><a href="#">Вопрос-ответ</a></li>
+          <li><a href="#">Возврат товара</a></li>
+        </ul>
+      </div>
+      <div class="rc-footer__col">
+        <div class="rc-footer__col-title">Контакты</div>
+        <ul class="rc-footer__nav">
+          <li><a href="tel:+79270810209">+7 (927) 081-02-09</a></li>
+          <li><a href="mailto:Roman.A.1@yandex.ru">Roman.A.1@yandex.ru</a></li>
+        </ul>
+        <div class="rc-footer__addresses">
+          <div class="rc-footer__address-item">с. Зубово, ул. Серебряная, 91</div>
+          <div class="rc-footer__address-item">ул. Ленина, 66</div>
+          <div class="rc-footer__address-item">с. Михайловка, пр. Мебельщиков, 10/1</div>
+        </div>
+      </div>
+    </div>
+    <div class="rc-footer__bottom">
+      <span class="rc-footer__copy">© 2026 ИП Бурцева А.Г. «Ресторан Цветов». Все права защищены.</span>
+      <ul class="rc-footer__legal">
+        <li><a href="#">Политика конфиденциальности</a></li>
+        <li class="rc-footer__legal-sep"></li>
+        <li><a href="#">Пользовательское соглашение</a></li>
+        <li class="rc-footer__legal-sep"></li>
+        <li><a href="#">Публичная оферта</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// Slider
+(function() {
+  var track = document.querySelector('.rc-gallery__track');
+  if (!track) return;
+  var slides = track.querySelectorAll('.rc-gallery__slide');
+  var dots = document.querySelectorAll('.rc-gallery__dot');
+  var total = slides.length;
+  var current = 0;
+  var timer = null;
+  function goTo(idx) {
+    slides[current].classList.remove('rc-gallery__slide--active');
+    dots[current].classList.remove('rc-gallery__dot--active');
+    current = (idx + total) % total;
+    slides[current].classList.add('rc-gallery__slide--active');
+    dots[current].classList.add('rc-gallery__dot--active');
+  }
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+  function startAuto() { stopAuto(); timer = setInterval(next, 5000); }
+  function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+  document.querySelector('.rc-gallery__arrow--prev').addEventListener('click', function() { prev(); startAuto(); });
+  document.querySelector('.rc-gallery__arrow--next').addEventListener('click', function() { next(); startAuto(); });
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() { goTo(parseInt(dot.getAttribute('data-slide'), 10)); startAuto(); });
+  });
+  var gallery = document.querySelector('.rc-gallery');
+  gallery.addEventListener('mouseenter', stopAuto);
+  gallery.addEventListener('mouseleave', startAuto);
+  var touchX = 0;
+  gallery.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; stopAuto(); }, { passive: true });
+  gallery.addEventListener('touchend', function(e) {
+    var diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+    startAuto();
+  }, { passive: true });
+  startAuto();
+})();
+
+// Catalog
+(function(){
+  var OWNER    = "roman-bur";
+  var REPO     = "flower-catalog";
+  var BRANCH   = "main";
+  var FILE     = "catalog.json";
+  var WHATSAPP = "79270810209";
+
+  var CATEGORIES = ["WOW","Хиты продаж","Розы","Кустовые розы","Комбо-наборы","Авторские букеты",
+    "Корзины","Монобукеты","Гиганты","По цветам","Супер-цена","По цвету","Воздушные шары",
+    "Букеты невесты","Ритуальная флористика"];
+
+  var url = "https://raw.githubusercontent.com/"+OWNER+"/"+REPO+"/"+BRANCH+"/"+FILE+"?t="+Date.now();
+  var ITEMS = [], active = null;
+
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function rub(n){ return Number(n).toLocaleString('ru-RU'); }
+  function cats(it){ return Array.isArray(it.categories) ? it.categories : (it.category?[it.category]:[]); }
+  function wa(name){ return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent("Здравствуйте! Хочу заказать: "+name); }
+
+  function renderTabs(){
+    var box = document.getElementById('fcat-tabs'); if(!box) return;
+    var used = CATEGORIES.filter(function(c){ return ITEMS.some(function(it){ return cats(it).indexOf(c)>=0; }); });
+    var html = tab('Все', null);
+    used.forEach(function(c){ html += tab(c, c); });
+    box.innerHTML = html;
+    box.querySelectorAll('[data-tab]').forEach(function(b){
+      b.onclick = function(){ active = b.getAttribute('data-tab') || null; renderTabs(); renderGrid(); };
+    });
+    function tab(label, val){
+      var on = (active===val) ? ' on' : '';
+      return '<button class="fcat-tab'+on+'" data-tab="'+(val==null?'':esc(val))+'">'+esc(label)+'</button>';
+    }
+  }
+
+  function renderGrid(){
+    var grid = document.getElementById('flower-catalog'); if(!grid) return;
+    var list = active==null ? ITEMS : ITEMS.filter(function(it){ return cats(it).indexOf(active)>=0; });
+    if(!list.length){ grid.innerHTML = '<div class="fcat-msg">В этой категории пока пусто.</div>'; return; }
+    grid.innerHTML = list.map(function(it){
+      var c = cats(it);
+      var eyebrow = c.length ? '<div class="fcat-eyebrow">'+esc(c[0])+'</div>' : '';
+      var btn = WHATSAPP ? '<a class="fcat-btn" href="'+wa(it.name)+'" target="_blank" rel="noopener">Заказать</a>' : '';
+      return '<div class="fcat-card">'
+        + '<img class="fcat-img" src="'+esc(it.image)+'" alt="'+esc(it.name)+'" loading="lazy">'
+        + '<div class="fcat-body">'+eyebrow
+        + '<div class="fcat-name">'+esc(it.name)+'</div>'
+        + '<div class="fcat-desc">'+esc(it.description)+'</div>'
+        + '<div class="fcat-price">'+rub(it.price)+' ₽</div>'+btn
+        + '</div></div>';
+    }).join('');
+  }
+
+  fetch(url).then(function(r){ return r.json(); }).then(function(items){
+    ITEMS = Array.isArray(items) ? items.filter(function(it){ return it && typeof it==='object'; }) : [];
+    if(!ITEMS.length){ document.getElementById('flower-catalog').innerHTML='<div class="fcat-msg">Каталог скоро появится.</div>'; return; }
+    renderTabs(); renderGrid();
+  }).catch(function(){
+    document.getElementById('flower-catalog').innerHTML='<div class="fcat-msg">Не удалось загрузить каталог.</div>';
+  });
+})();
+</script>
+</body>
+</html>
