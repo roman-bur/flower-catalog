@@ -46,5 +46,15 @@
     "categories": [
       "По цветам"
     ]
+  },
+  {
+    "id": "fl1782984761179",
+    "name": "Бывший друг Романа",
+    "description": "Он не любил манго",
+    "price": 0.99,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782984761179.jpg",
+    "categories": [
+      "Ритуальная флористика"
+    ]
   }
 ]
