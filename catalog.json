@@ -10,6 +10,16 @@
     ]
   },
   {
+    "id": "fl1782983991781",
+    "name": "Артур",
+    "description": "Лучший друг",
+    "price": 99999999999,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782983991781.jpg",
+    "categories": [
+      "WOW"
+    ]
+  },
+  {
     "id": "fl1782977221356",
     "name": "куст 1",
     "description": "куст 2",
@@ -35,16 +45,6 @@
     "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782979283735.jpg",
     "categories": [
       "По цветам"
-    ]
-  },
-  {
-    "id": "fl1782983991781",
-    "name": "Артур",
-    "description": "Лучший друг",
-    "price": 99999999999,
-    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782983991781.jpg",
-    "categories": [
-      "WOW"
     ]
   }
 ]
