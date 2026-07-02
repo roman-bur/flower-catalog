@@ -426,7 +426,7 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
     "Корзины","Монобукеты","Гиганты","По цветам","Супер-цена","По цвету","Воздушные шары",
     "Букеты невесты","Ритуальная флористика"];
 
-  var url = "https://raw.githubusercontent.com/"+OWNER+"/"+REPO+"/"+BRANCH+"/"+FILE+"?t="+Date.now();
+  var url = "https://api.github.com/repos/"+OWNER+"/"+REPO+"/contents/"+FILE;
   var ITEMS = [], active = null;
 
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -467,7 +467,8 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
     }).join('');
   }
 
-  fetch(url).then(function(r){ return r.json(); }).then(function(items){
+  fetch(url).then(function(r){ return r.json(); }).then(function(resp){
+    var items = JSON.parse(decodeURIComponent(escape(atob(resp.content.replace(/\n/g,'')))));
     ITEMS = Array.isArray(items) ? items.filter(function(it){ return it && typeof it==='object'; }) : [];
     if(!ITEMS.length){ document.getElementById('flower-catalog').innerHTML='<div class="fcat-msg">Каталог скоро появится.</div>'; return; }
     renderTabs(); renderGrid();
