@@ -36,5 +36,15 @@
     "categories": [
       "По цветам"
     ]
+  },
+  {
+    "id": "fl1782983991781",
+    "name": "Артур",
+    "description": "Лучший друг",
+    "price": 99999999999,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782983991781.jpg",
+    "categories": [
+      "WOW"
+    ]
   }
 ]
