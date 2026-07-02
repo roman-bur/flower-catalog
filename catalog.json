@@ -1,20 +1,4 @@
 [
-  {
-    "id": "fl1782976693268",
-    "name": "большой букет",
-    "description": "много много цветов",
-    "price": 3000,
-    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782976693268.jpg",
-    "categories": [
-      "WOW"
-    ]
-  },
-  {
-    "id": "fl1782976826958",
-    "name": "Пионы красные",
-    "description": "много роз здесь, нет пионов",
-    "price": 4500,
-    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782976826958.jpg",
-    "categories": []
-  }
+  null,
+  null
 ]
