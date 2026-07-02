@@ -18,5 +18,13 @@
     "categories": [
       "Кустовые розы"
     ]
+  },
+  {
+    "id": "fl1782977221356",
+    "name": "куст 1",
+    "description": "куст 2",
+    "price": 5000,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977221356.jpg",
+    "categories": []
   }
 ]
