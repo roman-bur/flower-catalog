@@ -89,5 +89,18 @@
     "categories": [
       "Вазы, секаторы"
     ]
+  },
+  {
+    "id": "fl1783060179794",
+    "name": "Ваза",
+    "description": "Ваза не бьющаяся, премиум, под большой букет",
+    "price": 2150,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783060179794_1783060179794_0.jpg?t=1783060181912",
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783060179794_1783060179794_0.jpg?t=1783060181912"
+    ],
+    "categories": [
+      "Вазы, секаторы"
+    ]
   }
 ]
