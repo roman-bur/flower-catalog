@@ -102,5 +102,18 @@
     "categories": [
       "Вазы, секаторы"
     ]
+  },
+  {
+    "id": "fl1783060242941",
+    "name": "надутые шары, а не как на фото",
+    "description": "шары калькированные на любое событие\nОбычно надутые продаем",
+    "price": 350,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783060242941_1783060242941_0.jpg?t=1783060245263",
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783060242941_1783060242941_0.jpg?t=1783060245263"
+    ],
+    "categories": [
+      "Воздушные шары"
+    ]
   }
 ]
