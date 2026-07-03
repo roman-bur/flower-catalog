@@ -69,11 +69,13 @@
     "name": "121",
     "description": "121",
     "price": 2300,
-    "image": "",
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782979283735.jpg",
     "categories": [
       "Игрушки"
     ],
-    "images": []
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782979283735.jpg"
+    ]
   },
   {
     "id": "fl1782996129606",
