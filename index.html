@@ -1003,7 +1003,7 @@ document.getElementById('pcard-add').onclick = function(){
 // ===== CATALOG =====
 (function(){
   var OWNER='roman-bur', REPO='flower-catalog', FILE='catalog.json';
-  var CATEGORIES=["WOW","Хиты продаж","Розы","Кустовые розы","Комбо-наборы","Авторские букеты","Корзины","Монобукеты","Гиганты","По цветам","Супер-цена","По цвету","Воздушные шары","Букеты невесты","Ритуальная флористика"];
+  var CATEGORIES = null; // берём из каталога автоматически
   var url='https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+FILE;
   var ITEMS=[], active=null;
   window._CATALOG_ITEMS = ITEMS; // глобальный доступ для корзины
@@ -1013,9 +1013,15 @@ document.getElementById('pcard-add').onclick = function(){
 
   function renderTabs(){
     var box=document.getElementById('fcat-tabs'); if(!box) return;
-    var used=CATEGORIES.filter(function(c){ return ITEMS.some(function(it){ return cats(it).indexOf(c)>=0; }); });
+    // собираем все уникальные категории из каталога в порядке первого появления
+    var seen = {}, ordered = [];
+    ITEMS.forEach(function(it){
+      cats(it).forEach(function(c){
+        if(c && !seen[c]){ seen[c]=true; ordered.push(c); }
+      });
+    });
     var html=tab('Все',null);
-    used.forEach(function(c){ html+=tab(c,c); });
+    ordered.forEach(function(c){ html+=tab(c,c); });
     box.innerHTML=html;
     box.querySelectorAll('[data-tab]').forEach(function(b){ b.onclick=function(){ active=b.getAttribute('data-tab')||null; renderTabs(); renderGrid(); }; });
     function tab(label,val){ var on=(active===val)?' on':''; return '<button class="fcat-tab'+on+'" data-tab="'+(val==null?'':esc(val))+'">'+esc(label)+'</button>'; }
