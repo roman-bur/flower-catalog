@@ -65,7 +65,10 @@
     "price": 300,
     "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782979283735.jpg",
     "categories": [
-      "По цветам"
+      "Игрушки"
+    ],
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782979283735.jpg"
     ]
   },
   {
