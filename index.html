@@ -192,6 +192,27 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
 .pcard-upsell-cat-name { font-size: 13px; font-weight: 600; color: #e8f0e4; text-align: center; }
 .pcard-upsell-cat-hint { font-size: 11px; color: #7a9278; text-align: center; }
 
+/* ========== TELEGRAM BOT FAB ========== */
+.tg-fab {
+  position: fixed; bottom: 104px; right: 28px; z-index: 900;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: #229ED9; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,.35);
+  text-decoration: none;
+  transition: transform .2s, background .2s;
+}
+.tg-fab:hover { background: #1a8bbf; transform: scale(1.07); }
+.tg-fab svg { width: 28px; height: 28px; fill: #fff; }
+.tg-fab-tooltip {
+  position: absolute; right: 64px; top: 50%; transform: translateY(-50%);
+  background: #1e2e1e; border: 1px solid #3e523e; color: #e8f0e4;
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+  padding: 6px 12px; border-radius: 8px; pointer-events: none;
+  opacity: 0; transition: opacity .2s;
+}
+.tg-fab:hover .tg-fab-tooltip { opacity: 1; }
+
 /* ========== CART ========== */
 .cart-fab {
   position: fixed; bottom: 28px; right: 28px; z-index: 900;
@@ -560,6 +581,12 @@ body { font-family: 'Inter', sans-serif; background: #1e2e1e; color: #e8f0e4; }
     </div>
   </div>
 </div>
+
+<!-- ========== TELEGRAM BOT FAB ========== -->
+<a class="tg-fab" href="https://t.me/assistent_rest_cvetov_sait_bot" target="_blank" rel="noopener" aria-label="Написать в Telegram">
+  <span class="tg-fab-tooltip">Задать вопрос</span>
+  <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+</a>
 
 <!-- ========== CART FAB ========== -->
 <button class="cart-fab" id="cart-fab" aria-label="Корзина">
