@@ -1,15 +1,119 @@
 [
   {
-    "id": "fl1783855849292",
-    "name": "WOW",
-    "description": "состав",
-    "price": 30000,
-    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783855849292_1783855849292_0.jpg?t=1783855851320",
-    "images": [
-      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783855849292_1783855849292_0.jpg?t=1783855851320"
-    ],
+    "id": "fl1782983991781",
+    "name": "Артур",
+    "description": "Лучший друг",
+    "price": 99999999999,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782983991781.jpg",
     "categories": [
       "WOW"
+    ]
+  },
+  {
+    "id": "fl1782976864055",
+    "name": "еще два букета",
+    "description": "это ромашки, но не точно",
+    "price": 3000,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782976864055.jpg",
+    "categories": [
+      "Розы",
+      "до 3000"
+    ],
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782976864055.jpg"
+    ]
+  },
+  {
+    "id": "fl1782977221356",
+    "name": "куст 1",
+    "description": "куст 2",
+    "price": 5000,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977221356.jpg",
+    "categories": [
+      "WOW"
+    ],
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977221356.jpg"
+    ]
+  },
+  {
+    "id": "fl1782984761179",
+    "name": "Бывший друг Романа",
+    "description": "Он не любил манго",
+    "price": 0.99,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782984761179.jpg",
+    "categories": [
+      "Ритуальная флористика"
+    ]
+  },
+  {
+    "id": "fl1782977180459",
+    "name": "раз",
+    "description": "раз",
+    "price": 2220,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459.jpg",
+    "categories": [
+      "WOW",
+      "Гиганты",
+      "до 3000"
+    ],
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459.jpg",
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459_2.jpg",
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459_3.jpg",
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782977180459_4.jpg"
+    ]
+  },
+  {
+    "id": "fl1782979283735",
+    "name": "121",
+    "description": "121",
+    "price": 2300,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782979283735.jpg",
+    "categories": [
+      "Игрушки"
+    ],
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782979283735.jpg"
+    ]
+  },
+  {
+    "id": "fl1782996129606",
+    "name": "Секатор",
+    "description": "",
+    "price": 500,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782996129606.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1782996129606.jpg"
+    ],
+    "categories": [
+      "Вазы, секаторы"
+    ]
+  },
+  {
+    "id": "fl1783060179794",
+    "name": "Ваза",
+    "description": "Ваза не бьющаяся, премиум, под большой букет",
+    "price": 2150,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783060179794_1783060179794_0.jpg?t=1783060181912",
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783060179794_1783060179794_0.jpg?t=1783060181912"
+    ],
+    "categories": [
+      "Вазы, секаторы"
+    ]
+  },
+  {
+    "id": "fl1783060242941",
+    "name": "надутые шары, а не как на фото",
+    "description": "шары калькированные на любое событие\nОбычно надутые продаем",
+    "price": 350,
+    "image": "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783060242941_1783060242941_0.jpg?t=1783060245263",
+    "images": [
+      "https://raw.githubusercontent.com/roman-bur/flower-catalog/main/images/fl1783060242941_1783060242941_0.jpg?t=1783060245263"
+    ],
+    "categories": [
+      "Воздушные шары"
     ]
   }
 ]
